@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Hi</h1>
+  <!-- <form action="/file" method="post" encType="multipart/form-data"> -->
+  <input class="js-file" type="file" name="info">
+  <!-- </form> -->
+
+  <button class="js-button">Click me</button>
+
+  <script>
+    const $input = document.querySelector('.js-file');
+    const $button = document.querySelector('.js-button');
+    $button.addEventListener('click', function() {
+      if ($input.files.length === 0) {
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('info', $input.files[0]);
+      formData.append('applesauce', 'foo bar');
+
+      try {
+        fetch('/file', {
+          method: 'POST',
+          body: formData
+        });
+      } catch(e) {
+        console.error(e);
+      }
+    });
+  </script>
+</body>
+</html>
